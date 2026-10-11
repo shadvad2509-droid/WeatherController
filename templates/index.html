@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погода — WeatherApp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<main class="app">
+    <h1 class="app__title">Погода</h1>
+    <p class="app__subtitle">Введите название города</p>
+
+    <form method="post" class="search">
+        <input type="text" name="city" class="search__input" placeholder="Например, Москва" autocomplete="off" required>
+        <button type="submit" class="search__btn">Узнать</button>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if weather %}
+        <div class="weather">
+            <div class="weather__header">
+                <div class="weather__city">{{ weather.city }}, {{ weather.country }}</div>
+                <img class="weather__icon" src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="">
+            </div>
+
+            <div class="weather__temp">{{ weather.temp }}°C</div>
+            <div class="weather__desc">{{ weather.description }}</div>
+
+            <div class="weather__details">
+                <div class="weather__detail">
+                    <span class="weather__label">Ощущается</span>
+                    <span class="weather__value">{{ weather.feels_like }}°C</span>
+                </div>
+                <div class="weather__detail">
+                    <span class="weather__label">Влажность</span>
+                    <span class="weather__value">{{ weather.humidity }}%</span>
+                </div>
+                <div class="weather__detail">
+                    <span class="weather__label">Ветер</span>
+                    <span class="weather__value">{{ weather.wind }} м/с</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</main>
+
+</body>
+</html>
